@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ea96bd;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #cd0d7a;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      text-align: center;
+      color: rgb(205, 14, 116);
+      margin-bottom: 20px;
+      font-size: 75px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 85%;
+      padding: 10px;
+      border: 1px solid #ea85b1;
+      border-radius: 5px;
+    }
+    button {
+      display: block;
+      width: 50%;
+      padding: 10px;
+      background: #020609;
+      color: rgb(252, 247, 250);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background: #010203;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resume Builder</h1>
+  <div class="container">
+    <div class="form-group">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob">
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" placeholder="Enter your email">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" placeholder="Enter your phone number">
+    </div>
+    <div class="form-group">
+      <label for="linkedin">LinkedIn:</label>
+      <input type="url" id="linkedin" placeholder="Enter LinkedIn profile URL">
+    </div>
+    <div class="form-group">
+      <label for="github">GitHub:</label>
+      <input type="url" id="github" placeholder="Enter GitHub profile URL">
+    </div>
+    <div class="form-group">
+      <label for="summary">Summary:</label>
+      <textarea id="summary" placeholder="Write a brief summary"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="education">Education (e.g., Degree, College, Year):</label>
+      <textarea id="education" placeholder="List your education details"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="cgpa">CGPA/Percentage:</label>
+      <input type="text" id="cgpa" placeholder="Enter your CGPA or Percentage">
+    </div>
+    <div class="form-group">
+      <label for="passedOutYear">Passed Out Year:</label>
+      <input type="text" id="passedOutYear" placeholder="Enter your passed out year">
+    </div>
+    <div class="form-group">
+      <label for="arrears">Any Arrears:</label>
+      <select id="arrears">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="jobExperience">Job Experience:</label>
+      <select id="jobExperience" onchange="toggleJobDetails()">
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+      </select>
+    </div>
+    <div id="jobDetails" style="display: none;">
+      <div class="form-group">
+        <label for="organization">Organization Name:</label>
+        <input type="text" id="organization" placeholder="Enter organization name">
+      </div>
+      <div class="form-group">
+        <label for="role">Role of Work:</label>
+        <input type="text" id="role" placeholder="Enter your role">
+      </div>
+      <div class="form-group">
+        <label for="duration">Duration:</label>
+        <input type="text" id="duration" placeholder="Enter duration (e.g., 2 years)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="projects">Projects (e.g., Title, Description, Link):</label>
+      <textarea id="projects" placeholder="List your projects"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="skills">Skills:</label>
+      <textarea id="skills" placeholder="List your skills"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="languages">Languages Known:</label>
+      <textarea id="languages" placeholder="List languages"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="locations">Preferred Job Locations:</label>
+      <textarea id="locations" placeholder="List preferred locations"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="workType">Looking for:</label>
+      <select id="workType">
+        <option value="Internship">Internship</option>
+        <option value="Job">Job</option>
+        <option value="Freelance">Freelance</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="profilePicture">Profile Picture:</label>
+      <input type="file" id="profilePicture" accept="image/*">
+    </div>
+    <button onclick="generateResume()">Generate Resume</button>
+  </div>
+
+  <script>
+    function toggleJobDetails() {
+      const jobExperience = document.getElementById('jobExperience').value;
+      const jobDetails = document.getElementById('jobDetails');
+      if (jobExperience === 'Yes') {
+        jobDetails.style.display = 'block';
+      } else {
+        jobDetails.style.display = 'none';
+      }
+    }
+
+    function generateResume() {
+      const name = document.getElementById('name').value;
+      const dob = document.getElementById('dob').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const linkedin = document.getElementById('linkedin').value;
+      const github = document.getElementById('github').value;
+      const summary = document.getElementById('summary').value;
+      const education = document.getElementById('education').value;
+      const cgpa = document.getElementById('cgpa').value;
+      const passedOutYear = document.getElementById('passedOutYear').value;
+      const arrears = document.getElementById('arrears').value;
+      const jobExperience = document.getElementById('jobExperience').value;
+      const organization = document.getElementById('organization').value;
+      const role = document.getElementById('role').value;
+      const duration = document.getElementById('duration').value;
+      const projects = document.getElementById('projects').value;
+      const skills = document.getElementById('skills').value;
+      const languages = document.getElementById('languages').value;
+      const locations = document.getElementById('locations').value;
+      const workType = document.getElementById('workType').value;
+
+      const fileInput = document.getElementById('profilePicture');
+      let profilePictureURL = '';
+
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profilePictureURL = e.target.result;
+          displayResume(profilePictureURL);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        displayResume('');
+      }
+
+      function displayResume(profilePictureURL) {
+        const newWindow = window.open('', '_blank');
+        newWindow.document.write(`
+          <html>
+            <head>
+              <title>${name}'s Resume</title>
+              <style>
+                body {
+                  font-family: Arial, sans-serif;
+                  margin: 20px;
+                  background-color: #f9f9f9;
+                }
+                .resume {
+                  display: flex;
+                  flex-direction: row;
+                  background: white;
+                  padding: 20px;
+                  border: 1px solid #ccc;
+                  border-radius: 10px;
+                }
+                .left {
+                  width: 30%;
+                  text-align: center;
+                }
+                .left img {
+                  border-radius: 50%;
+                  max-width: 150px;
+                }
+                .right {
+                  width: 70%;
+                  padding-left: 20px;
+                }
+                h1 {
+                  font-size: 24px;
+                  margin-bottom: 10px;
+                }
+                p {
+                  margin: 5px 0;
+                }
+                .download-btn {
+                  margin-top: 20px;
+                  padding: 10px;
+                  background: black;
+                  color: white;
+                  border: none;
+                  border-radius: 5px;
+                  font-size: 16px;
+                  cursor: pointer;
+                }
+              </style>
+            </head>
+            <body>
+              <div class="resume">
+                <div class="left">
+                  ${profilePictureURL ? `<img src="${profilePictureURL}" alt="Profile Picture">` : ''}
+                  <p><strong>${name}</strong></p>
+                  <p>Date of Birth: ${dob}</p>
+                  <p>Email: ${email}</p>
+                  <p>Phone: ${phone}</p>
+                  <p>LinkedIn: ${linkedin}</p>
+                  <p>GitHub: ${github}</p>
+                </div>
+                <div class="right">
+                  <h1>Summary</h1>
+                  <p>${summary}</p>
+                  <h1>Education</h1>
+                  <p>${education.replace(/\n/g, '<br>')}</p>
+                  <p>CGPA/Percentage: ${cgpa}</p>
+                  <p>Passed Out Year: ${passedOutYear}</p>
+                  <p>Arrears: ${arrears}</p>
+                  ${jobExperience === 'Yes' ? `
+                  <h1>Job Experience</h1>
+                  <p>Organization: ${organization}</p>
+                  <p>Role: ${role}</p>
+                  <p>Duration: ${duration}</p>
+                  ` : ''}
+                  <h1>Projects</h1>
+                  <p>${projects.replace(/\n/g, '<br>')}</p>
+                  <h1>Skills</h1>
+                  <p>${skills.replace(/\n/g, '<br>')}</p>
+                  <h1>Languages</h1>
+                  <p>${languages.replace(/\n/g, '<br>')}</p>
+                  <h1>Preferred Job Locations</h1>
+                  <p>${locations.replace(/\n/g, '<br>')}</p>
+                  <h1>Looking For</h1>
+                  <p>${workType}</p>
+                </div>
+              </div>
+              <button class="download-btn" onclick="window.print()">Download/Print Resume</button>
+            </body>
+          </html>
+        `);
+        newWindow.document.close();
+      }
+    }
+  </script>
+</body>
+</html>
